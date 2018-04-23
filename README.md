@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #Java skipeSystem
 
 ##项目具体流程：
