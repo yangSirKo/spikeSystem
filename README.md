@@ -1,4 +1,5 @@
-#Java 高性能高并发秒杀系统
+<<<<<<< HEAD
+#Java skipeSystem
 
 ##项目具体流程：
 
@@ -9,3 +10,5 @@
 2.封装Result结果类型(json)以及继承模板thymeleaf
 
 3.集成mybatis和Druid连接池(alibaba)
+
+> 2bd6ed4951bf28e53a73f047b570bc4bff9f3318
