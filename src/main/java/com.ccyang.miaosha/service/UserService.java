@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
 
-    // userDao (Proxy)对象会在 mybatis运行时进行创建并注入
+    /**
+     * userDao (Proxy)对象会在 mybatis运行时进行创建并注入
+     */
     @Autowired
     private UserDao userDao;
 
@@ -17,7 +19,9 @@ public class UserService {
         return userDao.getById(id);
     }
 
-    // 测试事务是起作用的
+    /**
+     * 测试事务是否起作用，结果是起作用
+     */
     @Transactional
     public boolean tx(){
         User user = new User();
