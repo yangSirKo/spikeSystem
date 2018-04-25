@@ -33,7 +33,7 @@ public class LoginController {
     @ResponseBody
     public Result<Boolean> doLogin(@Valid LoginVo loginVo){
         log.info(loginVo.toString());
-        // login in
+        //login in
         miaoshaUserService.login(loginVo);
         return Result.success(true);
     }
