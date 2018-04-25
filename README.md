@@ -10,3 +10,4 @@
 
 3.集成mybatis和Druid连接池(alibaba)
 
+4.集成redis，完成了通用key的封装<pre>在com.ccyang.miaosha.redis包下（模板方法模式）<pre>
