@@ -4,6 +4,8 @@ package com.ccyang.miaosha.controller;
 import com.ccyang.miaosha.Result.CodeMsg;
 import com.ccyang.miaosha.Result.Result;
 import com.ccyang.miaosha.domain.User;
+import com.ccyang.miaosha.redis.RedisService;
+import com.ccyang.miaosha.redis.UserKey;
 import com.ccyang.miaosha.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,9 @@ public class SimpleController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    RedisService redisService;
 
     /**
      * JSON 输出
@@ -69,4 +74,29 @@ public class SimpleController {
         return Result.success(true);
     }
 
+    /**
+     * Json 输出
+     * @return
+     */
+    @RequestMapping("/redis/get")
+    @ResponseBody
+    public Result<User> redisGet(){
+        User v1 = redisService.get(UserKey.getById,""+1, User.class );
+        System.out.println(v1);
+        return Result.success(v1);
+    }
+
+    /**
+     * Json 输出
+     * @return
+     */
+    @RequestMapping("/redis/set")
+    @ResponseBody
+    public Result<Boolean> redisSet(){
+        User user = new User();
+        user.setId(1);
+        user.setName("111111111");
+        boolean v1 = redisService.set(UserKey.getById,""+1, user);
+        return Result.success(v1);
+    }
 }
