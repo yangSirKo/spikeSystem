@@ -1,5 +1,6 @@
 package com.ccyang.miaosha.config;
 
+import com.ccyang.miaosha.access.UserContext;
 import com.ccyang.miaosha.domain.MiaoshaUser;
 import com.ccyang.miaosha.service.MiaoshaUserService;
 import org.apache.commons.lang3.StringUtils;
@@ -31,28 +32,12 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
     }
 
     @Override
-    public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest,
+    public Object resolveArgument(MethodParameter methodParameter,
+                                  ModelAndViewContainer modelAndViewContainer,
+                                  NativeWebRequest nativeWebRequest,
                                   WebDataBinderFactory webDataBinderFactory){
-
-        HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
-        HttpServletResponse response = nativeWebRequest.getNativeResponse(HttpServletResponse.class);
-        String requestToken = request.getParameter(MiaoshaUserService.COOKIE_NAME_TOKEN);
-        String cookieToken = getCookieValue(request, MiaoshaUserService.COOKIE_NAME_TOKEN);
-
-        if (StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(requestToken)) {
-            return null;
-        }
-        String token = StringUtils.isEmpty(requestToken) ? cookieToken : requestToken;
-        return miaoshaUserService.getByToken(response, token);
+       return UserContext.getUser();
     }
 
-    private String getCookieValue(HttpServletRequest request , String cookieNameToken) {
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies){
-            if(cookie.getName().equals(cookieNameToken)){
-                return cookie.getValue();
-            }
-        }
-        return null;
-    }
+
 }

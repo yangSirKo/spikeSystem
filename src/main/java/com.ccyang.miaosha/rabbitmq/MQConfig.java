@@ -10,6 +10,8 @@ import java.util.Map;
 @Configuration
 public class MQConfig {
 
+    public static final String SPIKE_QUEUE = "spike.queue";
+
     public static final String DIRECT_QUEUE = "direct.queue";
 
     public static final String FANOUT_QUEUE1 = "fanout.queue1";
@@ -24,6 +26,12 @@ public class MQConfig {
 
     public static final String HEADER_QUEUE = "header.queue";
     public static final String HEADER_EXCHANGE = "header.exchange";
+
+
+    @Bean
+    public Queue spikeQueue(){
+        return new Queue(SPIKE_QUEUE,true);
+    }
 
 
     /**

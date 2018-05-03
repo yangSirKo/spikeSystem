@@ -4,6 +4,7 @@ package com.ccyang.miaosha.controller;
 import com.ccyang.miaosha.Result.CodeMsg;
 import com.ccyang.miaosha.Result.Result;
 import com.ccyang.miaosha.domain.User;
+import com.ccyang.miaosha.rabbitmq.MQSender;
 import com.ccyang.miaosha.redis.RedisService;
 import com.ccyang.miaosha.redis.UserKey;
 import com.ccyang.miaosha.service.UserService;
@@ -24,6 +25,54 @@ public class SimpleController {
 
     @Autowired
     RedisService redisService;
+
+    @Autowired
+    MQSender sender;
+
+    /**
+     * Direct Pattern Test
+     * @return
+     */
+    @RequestMapping("/mq/direct")
+    @ResponseBody
+    public Result<String> directMQ(){
+        sender.sendDirect("hello Direct");
+        return Result.success("ok Direct");
+    }
+
+    /**
+     * Fanout Pattern Test
+     * @return
+     */
+    @RequestMapping("/mq/fanout")
+    @ResponseBody
+    public Result<String> fanoutMQ(){
+        sender.sendFanout("hello Fanout");
+        return Result.success("ok Fanout");
+    }
+
+    /**
+     * Topic Pattern Test
+     * @return
+     */
+    @RequestMapping("/mq/topic")
+    @ResponseBody
+    public Result<String> topicMQ(){
+        sender.sendTopic("hello Topic");
+        return Result.success("ok Topic");
+    }
+
+    /**
+     * Header Pattern Test
+     * @return
+     */
+    @RequestMapping("/mq/header")
+    @ResponseBody
+    public Result<String> headerMQ(){
+        sender.sendHeader("hello Header");
+        return Result.success("ok Header");
+    }
+
 
     /**
      * JSON 输出

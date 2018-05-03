@@ -8,6 +8,13 @@ public class MiaoshaUserKey extends BasePrefix{
         super(expireSeconds, prefix);
     }
 
+    private MiaoshaUserKey(String prefix) {
+        super(prefix);
+    }
+
     public static MiaoshaUserKey token = new MiaoshaUserKey(TOKEN_EXPIRE,"tk");
+
+    // cache Object without expire time
+    public static MiaoshaUserKey getById = new MiaoshaUserKey("id");
 
 }

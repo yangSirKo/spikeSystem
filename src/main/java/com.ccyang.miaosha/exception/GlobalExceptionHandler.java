@@ -18,6 +18,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)  // value指定拦截那些异常
     public Result<String> exceptionHandler(HttpServletRequest request, Exception e) {
+        e.printStackTrace();
 
         if(e instanceof GlobalException){
             GlobalException ge = (GlobalException)e;

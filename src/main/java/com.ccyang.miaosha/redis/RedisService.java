@@ -1,6 +1,8 @@
 package com.ccyang.miaosha.redis;
 
 import com.alibaba.fastjson.JSON;
+import com.ccyang.miaosha.domain.MiaoshaUser;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
@@ -63,6 +65,25 @@ public class RedisService {
     }
 
     /**
+     * 删除键
+     * @param keyPrefix
+     * @param key
+     * @return
+     */
+    public boolean delete(KeyPrefix keyPrefix, String key){
+        Jedis jedis = null;
+        try{
+            jedis = jedisPool.getResource();
+            // 获得真实的 key
+            String realKey = keyPrefix.getPrefix()+key;
+            jedis.del(realKey);
+            return true;
+        }finally {
+            returnToPool(jedis);
+        }
+    }
+
+    /**
      * 键对应的值是否存在
      */
     public <T> boolean exists(KeyPrefix keyPrefix, String key){
@@ -111,7 +132,7 @@ public class RedisService {
     }
 
 
-    private <T> String BeanToString(T value) {
+    public static <T> String BeanToString(T value) {
         if(value == null){
             return null;
         }
@@ -127,7 +148,7 @@ public class RedisService {
         }
     }
 
-    private <T> T StringToBean(String str, Class<T> clazz) {
+    public static <T> T StringToBean(String str, Class<T> clazz) {
         if(str == null || str.length() <= 0 || clazz == null){
             return null;
         }

@@ -6,6 +6,9 @@ import org.apache.commons.lang3.StringUtils;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/**
+ * realize @IsMobile annotation handle logic 实现 @IsMoblie在注解的处理逻辑
+ */
 public class IsMobileValidator implements ConstraintValidator<IsMobile, String> {
 
     private boolean required = false;

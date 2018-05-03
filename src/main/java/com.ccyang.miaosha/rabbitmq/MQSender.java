@@ -7,6 +7,7 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.session.SessionProperties;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +17,17 @@ public class MQSender {
 
     @Autowired
     AmqpTemplate amqpTemplate;
+
+    public void sendSpikeMessage(SpikeMessage sm){
+        String msg = RedisService.BeanToString(sm);
+        log.info(msg);
+        amqpTemplate.convertAndSend(MQConfig.SPIKE_QUEUE,msg);
+    }
+
+
+
+
+
 
     /**
      * use Direct Pattern.  RabbitMQ default, no need exchange.
